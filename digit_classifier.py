@@ -128,25 +128,21 @@ class DigitClassifierApp:
         Start the training with the loaded model in a second thread
         """
 
-        # check if the model was loaded
-        if self.model is not None:
-            self.status.config(text='Training started...')
-            self.predict_button.config(state='disabled')
-            self.train_button.config(state='disabled')
-            self.root.update_idletasks()
+        self.status.config(text='Training started...')
+        self.predict_button.config(state='disabled')
+        self.train_button.config(state='disabled')
+        self.root.update_idletasks()
 
-            def task():
-                try:
-                    train_and_save(save_path=MODEL_PATH)
-                    model = load_model(MODEL_PATH)
+        def task():
+            try:
+                train_and_save(save_path=MODEL_PATH)
+                model = load_model(MODEL_PATH)
 
-                    self.root.after(0, lambda: self.on_model_loaded(model))
-                except Exception as e:
-                    self.root.after(0, lambda: self.status.config(text=f'Error: {e}'))
+                self.root.after(0, lambda: self.on_model_loaded(model))
+            except Exception as e:
+                self.root.after(0, lambda: self.status.config(text=f'Error: {e}'))
 
-            self.run_in_thread(task)
-        else:
-            self.status.config(text='No Model found. Please train the model first!')
+        self.run_in_thread(task)
 
     def on_model_loaded(self, model):
         self.model = model
