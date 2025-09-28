@@ -8,6 +8,8 @@ import numpy as np
 import os
 import sys
 
+from src.visualize import VisualizeWindow
+
 import threading
 
 try:
@@ -16,7 +18,7 @@ except Exception as e:
     print(f"error while importing from src.train: {e}")
     sys.exit(1)
 
-MODEL_PATH = "models/cnn_model_full.h5"
+MODEL_PATH = "models/cnn_model_full.keras"
 
 class DigitClassifierApp:
     def __init__(self, root):
@@ -43,6 +45,9 @@ class DigitClassifierApp:
         self.predict_button = tk.Button(root, text='Predict', command=self.predict, state='disabled')
         self.predict_button.grid(row=1, column=0, sticky='ew')
 
+        self.visualize_button = tk.Button(root, text='Visualize', command=self.open_visualizer, state='disabled')
+        self.visualize_button.grid(row=1, column=2, sticky='ew')
+
         tk.Button(root, text='Clear', command=self.clear).grid(row=1, column=1, sticky='ew')
         tk.Button(root, text='Quit', command=root.quit).grid(row=1, column=3, sticky='ew')
 
@@ -62,6 +67,7 @@ class DigitClassifierApp:
                 self.model = load_model(MODEL_PATH)
                 self.status.config(text='Model loaded.')
                 self.predict_button.config(state='normal')
+                self.visualize_button.config(state='normal')
             except Exception as e:
                 # the model couldnt be loaded
                 self.status.config(text='Error loading the model. Please train the model first...')
@@ -148,6 +154,7 @@ class DigitClassifierApp:
         self.model = model
         self.predict_button.config(state='normal')
         self.train_button.config(state='normal')
+        self.visualize_button.config(state='normal')
         self.status.config(text='Training finished. Model loaded.')
 
     def predict(self):
@@ -165,6 +172,18 @@ class DigitClassifierApp:
         top3 = [(int(i), float(preds[0][i])) for i in top3_idx]
 
         self.status.config(text=f'Prediction: {pred}')
+
+    def open_visualizer(self):
+        # opens a second window for CNN visualization
+        try:
+            # if already opened, lift to top
+            if self.visualizer is not None and hasattr(self.visualizer, 'top') and self.visualizer.top.winfo_exists():
+                self.visualizer.top.lift()
+                return
+        except Exception:
+            pass
+
+        self.visualizer = VisualizeWindow(self)
 
 if __name__ == '__main__':
     root = tk.Tk()

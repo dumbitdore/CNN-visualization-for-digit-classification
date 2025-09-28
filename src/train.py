@@ -15,7 +15,7 @@ np.random.seed(SEED)
 random.seed(SEED)
 tf.random.set_seed(SEED)
 
-def train_and_save(epochs=5, batch_size=128, save_path='models/cnn_model_full.h5'):
+def train_and_save(epochs=5, batch_size=128, save_path='models/cnn_model_full.keras'):
     """
     trains the model, saves it to the given path and returns the history
     """
@@ -42,7 +42,7 @@ def train_and_save(epochs=5, batch_size=128, save_path='models/cnn_model_full.h5
     model.save(save_path)
     return history
 
-def load_model(model_path="models/cnn_model_full.h5"):
+def load_model(model_path="models/cnn_model_full.keras"):
     model = build_model()
 
     # load model if file exist
