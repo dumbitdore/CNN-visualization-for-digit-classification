@@ -2,5 +2,3 @@ tensorflow
 scikit-learn
 numpy
 matplotlib
-tkinter
-PIL

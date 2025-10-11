@@ -137,6 +137,7 @@ class DigitClassifierApp:
         self.status.config(text='Training started...')
         self.predict_button.config(state='disabled')
         self.train_button.config(state='disabled')
+        self.visualize_button.config(state='disabled')
         self.root.update_idletasks()
 
         def task():
