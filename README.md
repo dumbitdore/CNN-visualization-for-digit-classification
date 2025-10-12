@@ -3,21 +3,17 @@
 This is a small side project to practice setting up Python projects in a clean and reusable way.
 The CNN architecture and MNIST training were originally implemented during my dual studies. The current focus is on turning this into a standalone tool with a simple GUI and neuron activation visualizations.
 
-A user can draw digits and see the model’s predictions. Future versions will also visualize neuron activations across the CNN layers. It has not yet been decided whether predictions and visualizations will run in real time or be triggered manually. The choice depends on the performance of both the prediction and the visualization.
+## Features
 
-## Current State
-
-* A CNN model has been built with TensorFlow and trained on the MNIST dataset.
-* Tests show excellent performance on the MNIST test data.
-* A simple GUI for digit drawing has been implemented. Predictions on self-drawn digits are slightly less accurate than on the test dataset but still reliable.
-* On startup, the tool checks if a trained model exists in a predefined path.
-* Users can train a new model at any time. The trained model is then saved to the predefined path.
-* After loading a model, users can draw a digit and trigger a prediction via a button. (Future versions may include real-time prediction.)
-
-## Next Steps
-
-* Implement a first MVP visualization of neuron activations.
-* Define a concept for displaying convolutional layers and network behavior.
+1. **Digit Classification**: Users can draw digits in the main GUI, and the CNN predicts their label.
+2. **Neuron Activation Visualization**: A separate visualization window can be triggered from the main GUI. This window shows:
+   - Each layer of the CNN as a column of neurons or filters.
+   - Activations of neurons using a blue colormap.
+   - The predicted output neuron highlighted in red.
+   - Connections between neurons, optionally colored based on activation values.
+3. **Model Management**:
+   - Checks for an existing trained model at startup.
+   - Allows users to train and save a new model.
 
 ## Installation and Usage
 
